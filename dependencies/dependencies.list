@@ -1,3 +1,5 @@
+# vim: ft=sh
+
 # Apps
 vlc  # Popular media player that can play almost any video/audio format
 
