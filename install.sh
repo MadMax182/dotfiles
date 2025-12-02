@@ -9,7 +9,8 @@ cd "$(dirname "$0")"
 echo "Current working directory is now: $(pwd)"
 
 # --- Configuration ---
-DEPENDENCY_DIR="./.dependencies"
+DEPENDENCY_DIR="./dependencies"
+SCRIPTS_DIR="./install-scripts"
 DEPENDENCY_FILE="dependencies.list"
 FONT_FILE="fonts.list"
 NERD_FONTS_DIR="$HOME/.local/share/fonts/NerdFonts"
@@ -264,6 +265,30 @@ install_nerd_fonts() {
 
 # Run Nerd Fonts installation
 install_nerd_fonts
+
+# --- 6. Link Config Folders ---
+
+link_configs() {
+  if [ ! -f "$SCRIPTS_DIR/link-configs.sh" ]; then
+    echo ""
+    echo "No link-configs.sh script found. Skipping config linking."
+    return 0
+  fi
+
+  echo ""
+  echo "--- Config Linking ---"
+  read -p "Do you want to link config folders? (y/n): " link_configs
+
+  if [[ "$link_configs" =~ ^[Yy]$ ]]; then
+    echo "Running link-configs.sh..."
+    bash ./link-configs.sh || true
+  else
+    echo "Skipping config linking."
+  fi
+}
+
+# Run config linking
+link_configs
 
 # Explicitly ensure the script exits with status 0
 exit 0
