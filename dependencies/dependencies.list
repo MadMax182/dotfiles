@@ -1,65 +1,86 @@
 # Apps
-vlc
+vlc  # Popular media player that can play almost any video/audio format
 
-# Lazyvim
-kitty
-lazygit
-git
+# Lazyvim (Neovim IDE setup)
+kitty  # Modern, GPU-accelerated terminal emulator
+lazygit  # Terminal UI for git commands (makes git operations visual and easier)
+git  # Version control system for tracking code changes
 
-# Hyprland
-hyprland
-hyprpaper
-hyprlock
-hypridle
-hyprpicker
+# Hyprland (Wayland compositor/window manager)
+hyprland  # The main tiling window manager (replaces traditional desktop environments)
+hyprpaper  # Wallpaper utility for Hyprland
+hyprlock  # Screen locker for Hyprland
+hypridle  # Idle daemon (triggers actions when you're inactive, like locking screen)
+hyprpicker  # Color picker tool for Hyprland
 
-# Other
-wget
-unzip
-gum
-rsync
-figlet
-xdg-user-dirs
-xdg-desktop-portal-gtk
-xdg-desktop-portal-hyprland
-libnotify
-qt5-wayland
-qt6-wayland
-fastfetch
-eza
-python-pip
-python-gobject
-python-screeninfo
-tumbler
-brightnessctl
-nm-connection-editor
-network-manager-applet
-imagemagick
-jq
-xclip
-neovim
-htop
-blueman
-grim
-slurp
-cliphist
-nwg-look
-qt6ct
-waybar
-rofi-wayland
-polkit-gnome
-zsh
-zsh-completions
-fzf
-pavucontrol
-breeze
-flatpak
-swaync
-gvfs
-wlogout
-waypaper
-grimblast-git
-nwg-dock-hyprland
-power-profiles-daemon
-python-pywalfox
+# File & Download Tools
+wget  # Command-line tool to download files from the web
+unzip  # Extracts .zip compressed files
+rsync  # Syncs and transfers files efficiently
+xdg-user-dirs  # Creates standard user directories (Downloads, Documents, etc.)
+tumbler  # Thumbnail generator for file managers
+gvfs  # Virtual filesystem (enables trash, network drives, etc.)
 
+# Display & Wayland Support
+xdg-desktop-portal-gtk  # Desktop integration for GTK apps on Wayland
+xdg-desktop-portal-hyprland  # Desktop integration specifically for Hyprland
+qt5-wayland  # Allows Qt5 applications to run on Wayland
+qt6-wayland  # Allows Qt6 applications to run on Wayland
+qt6ct  # Qt6 configuration tool for theming
+
+# UI & Appearance
+gum  # Tool for making beautiful shell scripts with styled prompts
+figlet  # Creates ASCII art text banners
+nwg-look  # GTK settings editor (change themes, icons, fonts)
+breeze  # KDE's Breeze theme/cursor set
+waypaper  # GUI wallpaper setter for Wayland
+waybar  # Highly customizable status bar for Wayland
+rofi-wayland  # Application launcher and window switcher
+swaync  # Notification daemon (shows popup notifications)
+wlogout  # Logout menu with icons (shutdown, reboot, logout options)
+nwg-dock-hyprland  # MacOS-style dock for Hyprland
+
+# System Info & Monitoring
+fastfetch  # System information tool (shows OS, CPU, RAM, etc. with logo)
+htop  # Interactive process viewer (better than basic 'top')
+neovim  # Modern, extensible terminal text editor (Vim fork)
+
+# Notifications & Services
+libnotify  # Library for sending desktop notifications
+polkit-gnome  # Authentication agent (prompts for sudo password in GUI)
+
+# File Management
+eza  # Modern replacement for 'ls' command with colors and icons
+imagemagick  # Image manipulation toolkit (resize, convert, edit images)
+jq  # JSON processor for parsing/manipulating JSON data
+xclip  # Command-line clipboard manager
+
+# Hardware Control
+brightnessctl  # Control screen brightness
+blueman  # Bluetooth manager (GUI and applet)
+network-manager-applet  # System tray applet for NetworkManager
+nm-connection-editor  # GUI for editing network connections
+pavucontrol  # PulseAudio volume control (advanced audio settings)
+power-profiles-daemon  # Manages power profiles (performance/balanced/power-saver)
+
+# Screenshots
+grim  # Screenshot tool for Wayland
+slurp  # Screen area selector (works with grim to select regions)
+grimblast-git  # Wrapper that combines grim and slurp functionality
+
+# Clipboard
+cliphist  # Clipboard history manager for Wayland
+
+# Shell & Terminal
+zsh  # Alternative shell to bash (more features and customization)
+zsh-completions  # Additional auto-completions for zsh
+fzf  # Fuzzy finder for searching files/commands quickly
+
+# Development
+python-pip  # Package installer for Python
+python-gobject  # Python bindings for GObject (used by GTK apps)
+python-screeninfo  # Python library to get screen/monitor information
+python-pywalfox  # Python tool to theme Firefox based on pywal colors
+
+# Application Support
+flatpak  # Universal package manager for sandboxed apps
