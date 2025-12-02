@@ -9,7 +9,7 @@ cd "$(dirname "$0")"
 echo "Current working directory is now: $(pwd)"
 
 # --- Configuration ---
-DEPENDENCY_DIR="../dependencies"
+DEPENDENCY_DIR="./.dependencies"
 DEPENDENCY_FILE="dependencies.list"
 FONT_FILE="fonts.list"
 NERD_FONTS_DIR="$HOME/.local/share/fonts/NerdFonts"
