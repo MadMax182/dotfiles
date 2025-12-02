@@ -10,8 +10,11 @@ echo "Current working directory is now: $(pwd)"
 
 # --- Configuration ---
 DEPENDENCY_FILE="dependencies.list"
+FONT_FILE="font.list"
+NERD_FONTS_DIR="$HOME/.local/share/fonts/NerdFonts"
 
 FULL_DEP_PATH="./$DEPENDENCY_FILE"
+FULL_FONT_PATH="./$FONT_FILE"
 ALL_PACKAGES=""
 PACKAGES_TO_INSTALL="" # New variable to hold only the packages that need installation
 
@@ -109,13 +112,13 @@ filter_packages() {
     PACKAGES_TO_INSTALL=""
 
     echo ""
-    echo "--- Checking for already installed packages ---"
+    echo "--- Checking for packages to install ---"
 
     for pkg in $ALL_PACKAGES; do
         if is_installed "$pkg"; then
-            echo "  [SKIP] $pkg is already installed."
+            # Package already installed, skip silently
+            :
         else
-            echo "  [ADD] $pkg needs to be installed."
             PACKAGES_TO_INSTALL="$PACKAGES_TO_INSTALL $pkg"
             packages_found=1
         fi
@@ -125,12 +128,9 @@ filter_packages() {
     PACKAGES_TO_INSTALL=$(echo "$PACKAGES_TO_INSTALL" | xargs)
 
     if [ $packages_found -eq 0 ]; then
-        echo ""
         echo "🎉 All required packages are already installed. Skipping installation phase."
-        exit 0
     else
-        echo ""
-        echo "Packages scheduled for installation: $PACKAGES_TO_INSTALL"
+        echo "Packages to install: $PACKAGES_TO_INSTALL"
     fi
 }
 
@@ -140,26 +140,116 @@ detect_pkg_manager
 gather_packages
 filter_packages # New step: filter the list
 
-echo "--- Running installation commands (might require password for sudo) ---"
+if [ -n "$PACKAGES_TO_INSTALL" ]; then
+    echo "--- Running installation commands (might require password for sudo) ---"
 
-# Step 1: Update package list (Always good practice before installing)
-echo "Updating package index..."
-# Added '|| true' to ignore potential failure and ensure a zero exit status
-sudo "$PKG_MANAGER" "$UPDATE_CMD" || true
-
-# Step 2: Install packages
-echo "Installing packages..."
-
-# Note: Use PACKAGES_TO_INSTALL instead of ALL_PACKAGES
-if [ "$PKG_MANAGER" == "pacman" ]; then
+    # Step 1: Update package list (Always good practice before installing)
+    echo "Updating package index..."
     # Added '|| true' to ignore potential failure and ensure a zero exit status
-    sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
-else
-    # Standard apt/dnf/yum structure. Added '|| true'
-    sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
+    sudo "$PKG_MANAGER" "$UPDATE_CMD" || true
+
+    # Step 2: Install packages
+    echo "Installing packages..."
+
+    # Note: Use PACKAGES_TO_INSTALL instead of ALL_PACKAGES
+    if [ "$PKG_MANAGER" == "pacman" ]; then
+        # Added '|| true' to ignore potential failure and ensure a zero exit status
+        sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
+    else
+        # Standard apt/dnf/yum structure. Added '|| true'
+        sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
+    fi
+
+    echo "--- Dependency installation complete! ---"
 fi
 
-echo "--- Dependency installation complete! ---"
+# --- 5. Nerd Fonts Installation ---
+
+install_nerd_fonts() {
+    if [ ! -f "$FULL_FONT_PATH" ]; then
+        echo ""
+        echo "No font.list file found. Skipping Nerd Fonts installation."
+        return 0
+    fi
+
+    echo ""
+    echo "--- Installing Nerd Fonts from list: $FULL_FONT_PATH ---"
+
+    # Read fonts from file, filter out comments and empty lines
+    local fonts_to_install=$(grep -v "^#" "$FULL_FONT_PATH" | grep -v "^$" | xargs)
+
+    if [ -z "$fonts_to_install" ]; then
+        echo "No fonts found in $FONT_FILE. Skipping font installation."
+        return 0
+    fi
+
+    echo "Fonts to install: $fonts_to_install"
+
+    # Create fonts directory if it doesn't exist
+    mkdir -p "$NERD_FONTS_DIR" || true
+
+    # Base URL for Nerd Fonts releases
+    local NERD_FONTS_RELEASE_URL="https://github.com/ryanoasis/nerd-fonts/releases/latest/download"
+
+    # Check which fonts need to be installed
+    local fonts_needed=""
+    for font in $fonts_to_install; do
+        local font_path="$NERD_FONTS_DIR/$font"
+        if [ ! -d "$font_path" ] || [ ! "$(ls -A "$font_path" 2>/dev/null)" ]; then
+            fonts_needed="$fonts_needed $font"
+        fi
+    done
+
+    fonts_needed=$(echo "$fonts_needed" | xargs)
+
+    if [ -z "$fonts_needed" ]; then
+        echo "🎉 All required fonts are already installed."
+        return 0
+    fi
+
+    echo "Fonts to install: $fonts_needed"
+
+    # Install each font
+    for font in $fonts_needed; do
+        echo ""
+        echo "Installing $font..."
+
+        local font_zip="${font}.zip"
+        local font_path="$NERD_FONTS_DIR/$font"
+
+        # Create font-specific directory
+        mkdir -p "$font_path" || true
+
+        # Download the font
+        echo "  Downloading $font_zip..."
+        if wget -q --show-progress -O "/tmp/$font_zip" "$NERD_FONTS_RELEASE_URL/$font_zip" 2>/dev/null || curl -L -o "/tmp/$font_zip" "$NERD_FONTS_RELEASE_URL/$font_zip" 2>/dev/null; then
+            echo "  Extracting $font_zip..."
+            unzip -q -o "/tmp/$font_zip" -d "$font_path" || true
+            rm -f "/tmp/$font_zip" || true
+            echo "  ✓ $font installed successfully"
+        else
+            echo "  ✗ Failed to download $font. Please check the font name and try again."
+            echo "    Valid names can be found at: https://github.com/ryanoasis/nerd-fonts/releases"
+        fi
+    done
+
+    # Update font cache
+    echo ""
+    echo "Updating font cache..."
+    if command -v fc-cache &> /dev/null; then
+        fc-cache -fv "$NERD_FONTS_DIR" || true
+        echo "✓ Font cache updated"
+    else
+        echo "Warning: fc-cache not found. You may need to update font cache manually."
+    fi
+
+    echo ""
+    echo "--- Nerd Fonts installation complete! ---"
+    echo "Fonts installed in: $NERD_FONTS_DIR"
+}
+
+# Run Nerd Fonts installation
+install_nerd_fonts
 
 # Explicitly ensure the script exits with status 0
 exit 0

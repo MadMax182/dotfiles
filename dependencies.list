@@ -1,22 +1,28 @@
+# Apps
+vlc
 
-#hyprland
-#neovim
-wget
-unzip
-gum
-rsync
+# Lazyvim
+kitty
+lazygit
 git
-figlet
-xdg-user-dirs
+
+# Hyprland
 hyprland
 hyprpaper
 hyprlock
 hypridle
 hyprpicker
+
+# Other
+wget
+unzip
+gum
+rsync
+figlet
+xdg-user-dirs
 xdg-desktop-portal-gtk
 xdg-desktop-portal-hyprland
 libnotify
-kitty
 qt5-wayland
 qt6-wayland
 fastfetch
@@ -31,7 +37,6 @@ network-manager-applet
 imagemagick
 jq
 xclip
-kitty
 neovim
 htop
 blueman
@@ -47,7 +52,6 @@ zsh
 zsh-completions
 fzf
 pavucontrol
-papirus-icon-theme
 breeze
 flatpak
 swaync
@@ -55,13 +59,7 @@ gvfs
 wlogout
 waypaper
 grimblast-git
-bibata-cursor-theme
-pacseek
-otf-font-awesome
-ttf-fira-sans
-ttf-fira-code
-ttf-firacode-nerd
 nwg-dock-hyprland
 power-profiles-daemon
 python-pywalfox
-vlc
+
