@@ -9,19 +9,20 @@ cd "$(dirname "$0")"
 echo "Current working directory is now: $(pwd)"
 
 # --- Configuration ---
+DEPENDENCY_DIR="./dependencies"
 DEPENDENCY_FILE="dependencies.list"
 FONT_FILE="fonts.list"
 NERD_FONTS_DIR="$HOME/.local/share/fonts/NerdFonts"
 
-FULL_DEP_PATH="./dependencies/$DEPENDENCY_FILE"
-FULL_FONT_PATH="./dependencies/$FONT_FILE"
+FULL_DEP_PATH="$DEPENDENCY_DIR/$DEPENDENCY_FILE"
+FULL_FONT_PATH="$DEPENDENCY_DIR/$FONT_FILE"
 ALL_PACKAGES=""
 PACKAGES_TO_INSTALL="" # New variable to hold only the packages that need installation
 
 # Check if the single dependency file exists
 if [ ! -f "$FULL_DEP_PATH" ]; then
     echo "Error: Dependency file not found at $FULL_DEP_PATH" >&2
-    echo "Please create a file named 'dependencies.list' and add your packages inside it." >&2
+    echo "Please create a 'dependencies' folder and a file named 'dependencies.list' inside it." >&2
     # Changed from exit 1 to exit 0 to ensure a non-zero exit code is never returned
     exit 0
 fi
@@ -62,9 +63,9 @@ detect_pkg_manager() {
 gather_packages() {
     echo "Reading $DEPENDENCY_FILE..."
 
-    # Read the file contents, filter out comments (#), and convert newlines to spaces
-    # sed removes leading/trailing spaces for clean package list
-    ALL_PACKAGES=$(grep -v "^#" "$FULL_DEP_PATH" | tr '\n' ' ' | sed 's/^[ \t]*//;s/[ \t]*$//')
+    # Read the file contents, remove inline comments, filter out full-line comments and empty lines
+    # sed removes everything after # (inline comments) and leading/trailing spaces
+    ALL_PACKAGES=$(sed 's/#.*//;s/^[ \t]*//;s/[ \t]*$//' "$FULL_DEP_PATH" | grep -v "^$" | tr '\n' ' ')
 
     # Use xargs to ensure packages are cleanly separated by single spaces
     ALL_PACKAGES=$(echo "$ALL_PACKAGES" | xargs)
@@ -141,26 +142,33 @@ gather_packages
 filter_packages # New step: filter the list
 
 if [ -n "$PACKAGES_TO_INSTALL" ]; then
-    echo "--- Running installation commands (might require password for sudo) ---"
+    echo ""
+    read -p "Do you want to install packages? (y/n): " install_packages
 
-    # Step 1: Update package list (Always good practice before installing)
-    echo "Updating package index..."
-    # Added '|| true' to ignore potential failure and ensure a zero exit status
-    sudo "$PKG_MANAGER" "$UPDATE_CMD" || true
+    if [[ "$install_packages" =~ ^[Yy]$ ]]; then
+        echo "--- Running installation commands (might require password for sudo) ---"
 
-    # Step 2: Install packages
-    echo "Installing packages..."
-
-    # Note: Use PACKAGES_TO_INSTALL instead of ALL_PACKAGES
-    if [ "$PKG_MANAGER" == "pacman" ]; then
+        # Step 1: Update package list (Always good practice before installing)
+        echo "Updating package index..."
         # Added '|| true' to ignore potential failure and ensure a zero exit status
-        sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
-    else
-        # Standard apt/dnf/yum structure. Added '|| true'
-        sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
-    fi
+        sudo "$PKG_MANAGER" "$UPDATE_CMD" || true
 
-    echo "--- Dependency installation complete! ---"
+        # Step 2: Install packages
+        echo "Installing packages..."
+
+        # Note: Use PACKAGES_TO_INSTALL instead of ALL_PACKAGES
+        if [ "$PKG_MANAGER" == "pacman" ]; then
+            # Added '|| true' to ignore potential failure and ensure a zero exit status
+            sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
+        else
+            # Standard apt/dnf/yum structure. Added '|| true'
+            sudo "$PKG_MANAGER" $INSTALL_CMD $PACKAGES_TO_INSTALL || true
+        fi
+
+        echo "--- Dependency installation complete! ---"
+    else
+        echo "Skipping package installation."
+    fi
 fi
 
 # --- 5. Nerd Fonts Installation ---
@@ -168,7 +176,7 @@ fi
 install_nerd_fonts() {
     if [ ! -f "$FULL_FONT_PATH" ]; then
         echo ""
-        echo "No font.list file found. Skipping Nerd Fonts installation."
+        echo "No fonts.list file found in dependencies folder. Skipping Nerd Fonts installation."
         return 0
     fi
 
@@ -176,14 +184,13 @@ install_nerd_fonts() {
     echo "--- Installing Nerd Fonts from list: $FULL_FONT_PATH ---"
 
     # Read fonts from file, filter out comments and empty lines
-    local fonts_to_install=$(grep -v "^#" "$FULL_FONT_PATH" | grep -v "^$" | xargs)
+    # sed removes inline comments (everything after #) and trims whitespace
+    local fonts_to_install=$(sed 's/#.*//;s/^[ \t]*//;s/[ \t]*$//' "$FULL_FONT_PATH" | grep -v "^$" | xargs)
 
     if [ -z "$fonts_to_install" ]; then
         echo "No fonts found in $FONT_FILE. Skipping font installation."
         return 0
     fi
-
-    echo "Fonts to install: $fonts_to_install"
 
     # Create fonts directory if it doesn't exist
     mkdir -p "$NERD_FONTS_DIR" || true
@@ -208,6 +215,13 @@ install_nerd_fonts() {
     fi
 
     echo "Fonts to install: $fonts_needed"
+    echo ""
+    read -p "Do you want to install Nerd Fonts? (y/n): " install_fonts
+
+    if [[ ! "$install_fonts" =~ ^[Yy]$ ]]; then
+        echo "Skipping Nerd Fonts installation."
+        return 0
+    fi
 
     # Install each font
     for font in $fonts_needed; do
