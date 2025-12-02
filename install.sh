@@ -13,8 +13,8 @@ DEPENDENCY_FILE="dependencies.list"
 FONT_FILE="fonts.list"
 NERD_FONTS_DIR="$HOME/.local/share/fonts/NerdFonts"
 
-FULL_DEP_PATH="./$DEPENDENCY_FILE"
-FULL_FONT_PATH="./$FONT_FILE"
+FULL_DEP_PATH="./dependencies/$DEPENDENCY_FILE"
+FULL_FONT_PATH="./dependencies/$FONT_FILE"
 ALL_PACKAGES=""
 PACKAGES_TO_INSTALL="" # New variable to hold only the packages that need installation
 
