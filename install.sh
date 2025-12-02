@@ -10,7 +10,7 @@ echo "Current working directory is now: $(pwd)"
 
 # --- Configuration ---
 DEPENDENCY_FILE="dependencies.list"
-FONT_FILE="font.list"
+FONT_FILE="fonts.list"
 NERD_FONTS_DIR="$HOME/.local/share/fonts/NerdFonts"
 
 FULL_DEP_PATH="./$DEPENDENCY_FILE"
