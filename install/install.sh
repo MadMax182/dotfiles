@@ -10,7 +10,6 @@ echo "Current working directory is now: $(pwd)"
 
 # --- Configuration ---
 DEPENDENCY_DIR="./dependencies"
-SCRIPTS_DIR="./install-scripts"
 DEPENDENCY_FILE="dependencies.list"
 FONT_FILE="fonts.list"
 NERD_FONTS_DIR="$HOME/.local/share/fonts/NerdFonts"
@@ -266,29 +265,69 @@ install_nerd_fonts() {
 # Run Nerd Fonts installation
 install_nerd_fonts
 
-# --- 6. Link Config Folders ---
+# --- 6. Run Additional Install Scripts ---
 
-link_configs() {
-  if [ ! -f "$SCRIPTS_DIR/link-configs.sh" ]; then
+run_install_scripts() {
+  local INSTALL_SCRIPTS_DIR="./scripts"
+
+  if [ ! -d "$INSTALL_SCRIPTS_DIR" ]; then
     echo ""
-    echo "No link-configs.sh script found. Skipping config linking."
+    echo "No scripts folder found. Skipping additional scripts."
+    return 0
+  fi
+
+  # Find all .sh files in the scripts directory
+  local scripts=("$INSTALL_SCRIPTS_DIR"/*.sh)
+
+  # Check if any scripts exist
+  if [ ! -e "${scripts[0]}" ]; then
+    echo ""
+    echo "No scripts found in scripts folder."
     return 0
   fi
 
   echo ""
-  echo "--- Config Linking ---"
-  read -p "Do you want to link config folders? (y/n): " link_configs
+  echo "--- Additional Install Scripts ---"
+  echo "Found ${#scripts[@]} script(s) in install-scripts folder:"
 
-  if [[ "$link_configs" =~ ^[Yy]$ ]]; then
-    echo "Running link-configs.sh..."
-    bash ./link-configs.sh || true
-  else
-    echo "Skipping config linking."
+  for script in "${scripts[@]}"; do
+    echo "  - $(basename "$script")"
+  done
+
+  echo ""
+  read -p "Do you want to run these scripts? (y/n): " run_scripts
+
+  if [[ ! "$run_scripts" =~ ^[Yy]$ ]]; then
+    echo "Skipping additional install scripts."
+    return 0
   fi
+
+  # Execute each script
+  for script in "${scripts[@]}"; do
+    local script_name=$(basename "$script")
+    echo ""
+    echo -e "${BLUE}--- Running: $script_name ---${NC}"
+
+    # Make script executable if it isn't already
+    chmod +x "$script" 2>/dev/null || true
+
+    # Run the script
+    bash "$script" || true
+
+    echo -e "${GREEN}--- Finished: $script_name ---${NC}"
+  done
+
+  echo ""
+  echo "All additional scripts completed."
 }
 
-# Run config linking
-link_configs
+# Define colors for script output
+BLUE='\033[0;34m'
+GREEN='\033[0;32m'
+NC='\033[0m' # No Color
+
+# Run additional install scripts
+run_install_scripts
 
 # Explicitly ensure the script exits with status 0
 exit 0

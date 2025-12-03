@@ -7,8 +7,8 @@
 cd "$(dirname "$0")"
 
 # Set source and destination directories
-DESKTOP_SOURCE_DIR="../desktop"  # One directory back from script location
-APPS_SOURCE_DIR="../apps"  # Apps folder
+DESKTOP_SOURCE_DIR="../../desktop"  # One directory back from script location
+APPS_SOURCE_DIR="../../apps"  # Apps folder
 CONFIG_DIR="$HOME/.config"
 BACKUP_DIR="$CONFIG_DIR/.backup_$(date +%Y%m%d_%H%M%S)"
 WALLPAPERS_SOURCE="$DESKTOP_SOURCE_DIR/hypr/wallpapers"
