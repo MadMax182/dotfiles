@@ -7,7 +7,7 @@ post_hook = 'pkill -SIGUSR1 kitty'
 
 [templates.hyprland]
 input_path = '~/.config/matugen/templates/hyprland-colors.conf'
-output_path = '~/.config/hypr/colors.conf'
+output_path = '~/.config/hypr/conf/colors/default.conf'
 post_hook = 'hyprctl reload'
 
 [templates.waybar]
@@ -49,18 +49,6 @@ output_path = '~/.config/nwg-dock-hyprland/colors.css'
 [templates.sequences]
 input_path = '~/.config/matugen/templates/sequences'
 output_path = '~/.cache/wal/sequences'
-
-[templates.primary]
-input_path = '~/.config/matugen/templates/primary'
-output_path = '~/.config/ml4w/colors/primary'
-
-[templates.secondary]
-input_path = '~/.config/matugen/templates/secondary'
-output_path = '~/.config/ml4w/colors/secondary'
-
-[templates.on_surface]
-input_path = '~/.config/matugen/templates/onsurface'
-output_path = '~/.config/ml4w/colors/onsurface'
 
 [templates.ohmyposh]
 input_path = '~/.config/matugen/templates/ohmyposh-colors.json'

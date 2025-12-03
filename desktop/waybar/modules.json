@@ -5,6 +5,8 @@
 // |_|  |_|\___/ \__,_|\__,_|_|\___||___/
 //
 //
+
+
 {
   // Workspaces
   "hyprland/workspaces": {
@@ -54,12 +56,6 @@
     },
     "separate-outputs": true
   },
-  // ML4W Welcome App
-  "custom/ml4w-welcome": {
-    "on-click": "flatpak run com.ml4w.sidebar",
-    "format": " ",
-    "tooltip-format": "Open ML4W Sidebar App"
-  },
   // Empty
   "custom/empty": {
     "format": ""
@@ -68,20 +64,6 @@
   "custom/tools": {
     "format": "",
     "tooltip-format": "Tools"
-  },
-
-  // Now Playing
-  "custom/nowplaying": {
-    "exec": "~/.config/ml4w/scripts/now-playing.sh",
-    "format": "  {text}",
-    "return-type": "json",
-    "interval": 1,
-    "escape": true,
-    "hide-empty-text": false,
-    "on-click": "playerctl play-pause",
-    "on-click-right": "playerctl next",
-    "on-click-middle": "playerctl previous",
-    "tooltip-format": "Left: Play/Pause\nRight: Next\nMiddle: Previous"
   },
 
   "mpris": {
@@ -108,21 +90,22 @@
   // Cliphist
   "custom/cliphist": {
     "format": "",
-    "on-click": "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh",
-    "on-click-right": "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh d",
-    "on-click-middle": "sleep 0.1 && ~/.config/ml4w/scripts/cliphist.sh w",
+    "on-click": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh",
+    "on-click-right": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh d",
+    "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh w",
     "tooltip-format": "Left: Open clipboard Manager\nRight: Delete an entry\nMiddle: Clear list"
   },
+
   // Updates Count
   "custom/updates": {
     "format": "  {}",
     "escape": true,
     "return-type": "json",
-    "exec": "~/.config/ml4w/scripts/updates.sh",
+    "exec": "~/.config/hypr/scripts/updates.sh",
     "interval": 1800,
     "signal": 1,
     "hide-empty-text": true,
-    "on-click": "~/.config/ml4w/settings/installupdates.sh"
+    "on-click": "~/.config/hypr/scripts/installupdates.sh"
   },
   // Wallpaper
   "custom/wallpaper": {
@@ -136,12 +119,6 @@
     "format": "",
     "on-click": "~/.config/waybar/themeswitcher.sh",
     "tooltip-format": "Select a waybar theme"
-  },
-  // Settings
-  "custom/settings": {
-    "format": "",
-    "on-click": "sleep 0.1 && com.ml4w.dotfilessettings",
-    "tooltip-format": "ML4W Dotfiles Settings"
   },
   // Keybindings
   "custom/keybindings": {
@@ -158,7 +135,7 @@
   // Windows VM
   "custom/windowsvm": {
     "format": "",
-    "on-click": "~/.config/ml4w/scripts/launchvm.sh",
+    "on-click": "~/.config/hypr/scripts/launchvm.sh",
     "tooltip": false
   },
   // Rofi Application Launcher
@@ -180,7 +157,7 @@
   // Power Menu
   "custom/exit": {
     "format": "",
-    "on-click": "~/.config/ml4w/scripts/wlogout.sh",
+    "on-click": "~/.config/hypr/scripts/wlogout.sh",
     "on-click-right": "hyprlock",
     "tooltip-format": "Left: Power menu\nRight: Lock screen"
   },
@@ -240,7 +217,7 @@
   // Clock
   "clock": {
         "format": "{:%I:%M %p - %Om/%Od/%Y}",
-    "on-click": "flatpak run com.ml4w.calendar",
+    "on-click": "flatpak run com.hypr.calendar",
     "timezone": "",
     "tooltip": false
   },
@@ -252,19 +229,19 @@
   // CPU
   "cpu": {
     "format": "/ C {usage}% ",
-    "on-click": "~/.config/ml4w/settings/system-monitor.sh"
+    "on-click": "~/.config/hypr/scripts/system-monitor.sh"
   },
   // Memory
   "memory": {
     "format": "/ M {}% ",
-    "on-click": "~/.config/ml4w/settings/system-monitor.sh"
+    "on-click": "~/.config/hypr/scripts/system-monitor.sh"
   },
   // Harddisc space used
   "disk": {
     "interval": 30,
     "format": "D {percentage_used}% ",
     "path": "/",
-    "on-click": "~/.config/ml4w/settings/system-monitor.sh"
+    "on-click": "~/.config/hypr/scripts/system-monitor.sh"
   },
   "hyprland/language": {
     "format": "/ K {short}"
@@ -332,8 +309,8 @@
     "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
-    "on-click": "~/.config/ml4w/settings/networkmanager.sh",
-    "on-click-right": "~/.config/ml4w/scripts/nm-applet.sh toggle",
+    "on-click": "~/.config/hypr/scripts/networkmanager.sh",
+    "on-click-right": "~/.config/hypr/scripts/nm-applet.sh toggle",
   },
   // Battery
   "battery": {
@@ -399,7 +376,7 @@
     "format-disabled": "",
     "format-off": "",
     "interval": 30,
-    "on-click": "sleep 0.1 && ~/.config/ml4w/settings/bluetooth.sh",
+    "on-click": "sleep 0.1 && ~/.config/hypr/scripts/bluetooth.sh",
     "format-no-controller": ""
   },
   // Other
