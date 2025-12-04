@@ -5,9 +5,10 @@
 # |__/|__/\_,_/_/_/ .__/\_,_/ .__/\__/_/
 #                /_/       /_/
 
-# Source library.sh
-source ./library.sh
+cd "$(dirname "$0" | cut -d'/' -f1-4)"
 
+# Source library.sh
+source ./scripts/wallpaper/library.sh
 
 # -----------------------------------------------------
 # Check to use wallpaper cache
@@ -53,8 +54,8 @@ cachefile="$cache_folder/current_wallpaper"
 blurredwallpaper="$cache_folder/blurred_wallpaper.png"
 squarewallpaper="$cache_folder/square_wallpaper.png"
 rasifile="$cache_folder/current_wallpaper.rasi"
-defaultwallpaper="$HOME/.config/hypr/wallpapers/default.jpg"
-wallpapereffect="$HOME/.config/hypr/scripts/wallpaper-effect.sh"
+defaultwallpaper="$PICTURES/wallpapers/default.jpg"
+wallpapereffect="$HOME/.userconfig/scripts/wallpaper-effect.sh"
 blur="50x30"
 
 # -----------------------------------------------------
@@ -128,11 +129,12 @@ THEME_PREF=$(grep -E '^gtk-application-prefer-dark-theme=' "$SETTINGS_FILE" | aw
 # Execute matugen
 # -----------------------------------------------------
 
-_writeLog "Execute matugen with $used_wallpaper"
 if [ "$THEME_PREF" -eq 1 ]; then
-  $HOME/.local/bin/matugen image $used_wallpaper -m "dark"
-else
   $HOME/.local/bin/matugen image $used_wallpaper -m "light"
+  _writeLog "Execute matugen with light $used_wallpaper"
+else
+  $HOME/.local/bin/matugen image $used_wallpaper -m "dark"
+  _writeLog "Execute matugen with dark $used_wallpaper"
 fi
 
 # -----------------------------------------------------
@@ -172,8 +174,11 @@ if [ -f $generatedversions/blur-$blur-$effect-$wallpaperfilename.png ] && [ "$fo
 else
   _writeLog "Generate new cached wallpaper blur-$blur-$effect-$wallpaperfilename with blur $blur"
   # notify-send --replace-id=1 "Generate new blurred version" "with blur $blur" -h int:value:66
-#   magick $used_wallpaper -resize 75% $blurredwallpaper
-#   _writeLog "Resized to 75%"
+  #   magick $used_wallpaper -resize 75% $blurredwallpaper
+  #   _writeLog "Resized to 75%"
+  cp "$used_wallpaper" "$blurredwallpaper"
+  _writeLog "Copied wallpaper to $blurredwallpaper for processing"
+  
   if [ ! "$blur" == "0x0" ]; then
     magick $blurredwallpaper -blur $blur -brightness-contrast -30 $blurredwallpaper
     cp $blurredwallpaper $generatedversions/blur-$blur-$effect-$wallpaperfilename.png
