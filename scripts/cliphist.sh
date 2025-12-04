@@ -10,7 +10,7 @@
 # -----------------------------------------------------
 # Load Launcher
 # -----------------------------------------------------
-launcher=$(cat $HOME/.config/ml4w/settings/launcher)
+launcher=rofi
 if [ "$launcher" == "walker" ]; then
     $HOME/.config/walker/launch.sh -m clipboard -N -H
 else

@@ -16,7 +16,7 @@
 
 cache_folder="$HOME/.cache/hypr"
 
-defaultwallpaper="$HOME/.config/hypr/wallpapers/default.jpg"
+defaultwallpaper="$HOME/.userconfig/wallpapers/default.jpg"
 
 cachefile="$cache_folder/current_wallpaper"
 

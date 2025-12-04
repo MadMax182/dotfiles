@@ -6,7 +6,8 @@
 #                /_/       /_/
 
 # Source library.sh
-source $HOME/.config/hypr/scripts/library.sh
+source ./library.sh
+
 
 # -----------------------------------------------------
 # Check to use wallpaper cache
