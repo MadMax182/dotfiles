@@ -5,13 +5,13 @@ My personal Arch Linux dotfiles and configuration.
 ## Quick Install
 
 ```bash
-bash <(curl -fsSL https://raw.githubusercontent.com/MadMax182/dotfiles.git # Change this!/main/init.sh)
+bash <(curl -fsSL https://raw.githubusercontent.com/MadMax182/dotfiles/main/init.sh)
 ```
 
 ## Manual Install
 
 ```bash
-git clone https://github.com/MadMax182/dotfiles.git # Change this!.git ~/.userconfig
+git clone https://github.com/MadMax182/dotfiles.git
 cd ~/.userconfig
 bash ./install/install.sh
 ```
@@ -74,7 +74,8 @@ bash ./install/install.sh
 ### Fonts
 
 - DepartureMono
-- CommitMono- CommitMono- CommitMono<!-- PACKAGE_LIST_END -->
+- CommitMono
+<!-- PACKAGE_LIST_END -->
 
 ## Features
 

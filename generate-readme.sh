@@ -45,13 +45,13 @@ parse_list() {
     comment=$(echo "$line" | grep -o '#.*' | sed 's/^#[[:space:]]*//')
 
     if [ -n "$comment" ]; then
-      output+="- **$clean_line** - $comment\n"
+      output+="- **$clean_line** - $comment"$'\n'
     else
-      output+="- $clean_line\n"
+      output+="- $clean_line"$'\n'
     fi
   done < "$file"
 
-  echo -e "$output"
+  printf "%s" "$output"
 }
 
 # Function to parse apps list (with flatpak support)
@@ -73,49 +73,59 @@ parse_apps_list() {
       app_name="${clean_line#flatpak:}"
       app_name=$(echo "$app_name" | sed 's/^[[:space:]]*//;s/[[:space:]]*$//')
       if [ -n "$comment" ]; then
-        flatpak_apps+="- **$app_name** (flatpak) - $comment\n"
+        flatpak_apps+="- **$app_name** (flatpak) - $comment"$'\n'
       else
-        flatpak_apps+="- $app_name (flatpak)\n"
+        flatpak_apps+="- $app_name (flatpak)"$'\n'
       fi
     else
       if [ -n "$comment" ]; then
-        regular_apps+="- **$clean_line** - $comment\n"
+        regular_apps+="- **$clean_line** - $comment"$'\n'
       else
-        regular_apps+="- $clean_line\n"
+        regular_apps+="- $clean_line"$'\n'
       fi
     fi
   done < "$file"
 
-  echo -e "${regular_apps}${flatpak_apps}"
+  printf "%s" "${regular_apps}${flatpak_apps}"
 }
 
 # Generate new content
-NEW_CONTENT="### Dependencies\n\n"
+NEW_CONTENT="### Dependencies"$'\n\n'
 if [ -f "$DEPENDENCY_DIR/$DEPENDENCY_FILE" ]; then
   NEW_CONTENT+=$(parse_list "$DEPENDENCY_DIR/$DEPENDENCY_FILE")
 else
-  NEW_CONTENT+="*No dependencies listed*\n"
+  NEW_CONTENT+="*No dependencies listed*"$'\n'
 fi
 
-NEW_CONTENT+="\n### Applications\n\n"
+NEW_CONTENT+=$'\n'"### Applications"$'\n\n'
 if [ -f "$DEPENDENCY_DIR/$APP_FILE" ]; then
   NEW_CONTENT+=$(parse_apps_list "$DEPENDENCY_DIR/$APP_FILE")
 else
-  NEW_CONTENT+="*No applications listed*\n"
+  NEW_CONTENT+="*No applications listed*"$'\n'
 fi
 
-NEW_CONTENT+="\n### Fonts\n\n"
+NEW_CONTENT+=$'\n'"### Fonts"$'\n\n'
 if [ -f "$DEPENDENCY_DIR/$FONT_FILE" ]; then
   NEW_CONTENT+=$(parse_list "$DEPENDENCY_DIR/$FONT_FILE")
 else
-  NEW_CONTENT+="*No fonts listed*\n"
+  NEW_CONTENT+="*No fonts listed*"$'\n'
 fi
 
+# Ensure final newline
+[[ "$NEW_CONTENT" != *$'\n' ]] && NEW_CONTENT+=$'\n'
+
+# Write new content to temp file
+CONTENT_FILE="${TEMP_FILE}.content"
+printf "%s" "$NEW_CONTENT" > "$CONTENT_FILE"
+
 # Replace content between markers and GitHub URLs
-awk -v new_content="$NEW_CONTENT" -v gh_user="$GITHUB_USER" -v gh_repo="$GITHUB_REPO" '
+awk -v content_file="$CONTENT_FILE" -v gh_user="$GITHUB_USER" -v gh_repo="$GITHUB_REPO" '
   /<!-- PACKAGE_LIST_START -->/ {
     print
-    printf "%s", new_content
+    while ((getline line < content_file) > 0) {
+      print line
+    }
+    close(content_file)
     skip=1
     next
   }
@@ -123,13 +133,18 @@ awk -v new_content="$NEW_CONTENT" -v gh_user="$GITHUB_USER" -v gh_repo="$GITHUB_
     skip=0
   }
   !skip {
-    # Replace GitHub URLs
+    # Replace GitHub URLs - both placeholders and existing URLs
+    gsub(/https:\/\/raw\.githubusercontent\.com\/[^\/]+\/[^\/]+\/main\/init\.sh/, "https://raw.githubusercontent.com/" gh_user "/" gh_repo "/main/init.sh")
+    gsub(/https:\/\/github\.com\/[^\/]+\/[^\/]+\.git/, "https://github.com/" gh_user "/" gh_repo ".git")
     gsub(/YOUR_USERNAME\/YOUR_REPO/, gh_user "/" gh_repo)
     gsub(/YOUR_USERNAME/, gh_user)
     gsub(/YOUR_REPO/, gh_repo)
     print
   }
 ' "$README_FILE" > "$TEMP_FILE"
+
+# Clean up
+rm -f "$CONTENT_FILE"
 
 # Replace original
 mv "$TEMP_FILE" "$README_FILE"
