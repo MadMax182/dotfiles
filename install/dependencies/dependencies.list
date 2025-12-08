@@ -2,6 +2,8 @@
 
 # Apps
 vlc  # Popular media player that can play almost any video/audio format
+1-password # Password manager
+1-password-cli # Password manager CLI integration
 
 # Lazyvim (Neovim IDE setup)
 kitty  # Modern, GPU-accelerated terminal emulator
@@ -31,7 +33,6 @@ qt6-wayland  # Allows Qt6 applications to run on Wayland
 qt6ct  # Qt6 configuration tool for theming
 
 # UI & Appearance
-gum  # Tool for making beautiful shell scripts with styled prompts
 figlet  # Creates ASCII art text banners
 nwg-look  # GTK settings editor (change themes, icons, fonts)
 breeze  # KDE's Breeze theme/cursor set
@@ -52,7 +53,6 @@ libnotify  # Library for sending desktop notifications
 polkit-gnome  # Authentication agent (prompts for sudo password in GUI)
 
 # File Management
-eza  # Modern replacement for 'ls' command with colors and icons
 imagemagick  # Image manipulation toolkit (resize, convert, edit images)
 jq  # JSON processor for parsing/manipulating JSON data
 xclip  # Command-line clipboard manager
@@ -60,9 +60,7 @@ xclip  # Command-line clipboard manager
 # Hardware Control
 brightnessctl  # Control screen brightness
 blueman  # Bluetooth manager (GUI and applet)
-network-manager-applet  # System tray applet for NetworkManager
 nm-connection-editor  # GUI for editing network connections
-pavucontrol  # PulseAudio volume control (advanced audio settings)
 power-profiles-daemon  # Manages power profiles (performance/balanced/power-saver)
 
 # Screenshots
@@ -72,17 +70,6 @@ grimblast-git  # Wrapper that combines grim and slurp functionality
 
 # Clipboard
 cliphist  # Clipboard history manager for Wayland
-
-# Shell & Terminal
-zsh  # Alternative shell to bash (more features and customization)
-zsh-completions  # Additional auto-completions for zsh
-fzf  # Fuzzy finder for searching files/commands quickly
-
-# Development
-python-pip  # Package installer for Python
-python-gobject  # Python bindings for GObject (used by GTK apps)
-python-screeninfo  # Python library to get screen/monitor information
-python-pywalfox  # Python tool to theme Firefox based on pywal colors
 
 # Application Support
 flatpak  # Universal package manager for sandboxed apps
