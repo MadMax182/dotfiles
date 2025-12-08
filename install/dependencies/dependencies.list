@@ -1,9 +1,10 @@
 # vim: ft=sh
 
 # Apps
-vlc  # Popular media player that can play almost any video/audio format
-1-password # Password manager
-1-password-cli # Password manager CLI integration
+1password # Password manager
+1password-cli # Password manager CLI integration
+
+
 
 # Lazyvim (Neovim IDE setup)
 kitty  # Modern, GPU-accelerated terminal emulator

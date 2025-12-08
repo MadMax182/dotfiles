@@ -1,0 +1,13 @@
+# vim: ft=sh
+
+# Regular packages (pacman/AUR):
+# package-name  # Optional comment
+#
+# Flatpak packages (prefix with "flatpak:"):
+# flatpak:com.application.Name  # Optional comment
+
+
+# yay packages
+brave-bin
+
+

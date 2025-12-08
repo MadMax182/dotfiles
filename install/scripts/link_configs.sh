@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Links config folders to ~/.config
+# Links config folders to ~/.config and home files to $HOME
 
 source "./paths/paths.conf"
 
@@ -14,8 +14,10 @@ echo -e "${BLUE}=== Config Folder Linking Script ===${NC}\n"
 
 CONFIG_SOURCE_DIR=$(readlink -f "$CONFIG_SOURCE_DIR")
 WALLPAPERS_EXISTS=false
+HOME_EXISTS=false
 
 [ -d "$WALLPAPERS_SOURCE_DIR" ] && WALLPAPERS_SOURCE_DIR=$(readlink -f "$WALLPAPERS_SOURCE_DIR") && WALLPAPERS_EXISTS=true && echo -e "${GREEN}✓${NC} Found wallpapers"
+[ -d "$HOME_SOURCE_DIR" ] && HOME_SOURCE_DIR=$(readlink -f "$HOME_SOURCE_DIR") && HOME_EXISTS=true && echo -e "${GREEN}✓${NC} Found home files"
 
 mkdir -p "$CONFIG_DIR" "$PICTURES_DIR"
 
@@ -61,6 +63,47 @@ process_dir() {
 echo -e "${BLUE}--- Processing config folders ---${NC}"
 process_dir "$CONFIG_SOURCE_DIR" "config"
 
+# Link home files
+if [ "$HOME_EXISTS" = true ]; then
+  echo -e "\n${BLUE}--- Processing home files ---${NC}"
+
+  # Enable dotglob to match hidden files
+  shopt -s dotglob
+  shopt -s nullglob
+
+  for item in "$HOME_SOURCE_DIR"/*; do
+    item_name=$(basename "$item")
+
+    # Skip . and .. directories
+    [[ "$item_name" == "." || "$item_name" == ".." ]] && continue
+
+    target="$HOME/$item_name"
+
+    # Already linked correctly
+    if [ -L "$target" ] && [ "$(readlink -f "$target")" = "$(readlink -f "$item")" ]; then
+      ((skipped++))
+      continue
+    fi
+
+    # Backup or remove existing
+    if [ -e "$target" ] || [ -L "$target" ]; then
+      if [ ! -L "$target" ]; then
+        mkdir -p "$HOME_BACKUP_DIR"
+        mv "$target" "$HOME_BACKUP_DIR/$item_name" && echo -e "  ${YELLOW}↻${NC} Backed up $item_name" && ((backed_up++))
+      else
+        rm "$target" && echo -e "  ${RED}✗${NC} Removed old link $item_name" && ((removed++))
+      fi
+    fi
+
+    # Create link
+    ln -s "$item" "$target" && echo -e "  ${GREEN}✓${NC} Linked $item_name" && ((linked++))
+  done
+
+  # Disable dotglob after use
+  shopt -u dotglob
+  shopt -u nullglob
+fi
+
 # Link wallpapers
 if [ "$WALLPAPERS_EXISTS" = true ]; then
   echo -e "\n${BLUE}--- Processing wallpapers ---${NC}"
@@ -77,6 +120,7 @@ fi
 # Summary
 echo -e "\n${BLUE}=== Summary ===${NC}"
 echo -e "${GREEN}Linked:${NC} $linked | ${YELLOW}Backed up:${NC} $backed_up | ${RED}Removed:${NC} $removed | ${BLUE}Skipped:${NC} $skipped"
-[ $backed_up -gt 0 ] && echo -e "\n${YELLOW}Backups:${NC} $BACKUP_DIR"
+[ -d "$BACKUP_DIR" ] && echo -e "\n${YELLOW}Config Backups:${NC} $BACKUP_DIR"
+[ -d "$HOME_BACKUP_DIR" ] && echo -e "${YELLOW}Home Backups:${NC} $HOME_BACKUP_DIR"
 echo -e "\n${GREEN}Done!${NC}"
 exit 0
