@@ -42,6 +42,7 @@ rofi-wayland  # Application launcher and window switcher
 swaync  # Notification daemon (shows popup notifications)
 wlogout  # Logout menu with icons (shutdown, reboot, logout options)
 nwg-dock-hyprland  # MacOS-style dock for Hyprland
+oh-my-posh-bin
 
 # System Info & Monitoring
 fastfetch  # System information tool (shows OS, CPU, RAM, etc. with logo)

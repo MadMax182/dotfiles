@@ -52,6 +52,7 @@ bash ./install/install.sh
 - **swaync** - Notification daemon (shows popup notifications)
 - **wlogout** - Logout menu with icons (shutdown, reboot, logout options)
 - **nwg-dock-hyprland** - MacOS-style dock for Hyprland
+- oh-my-posh-bin
 - **fastfetch** - System information tool (shows OS, CPU, RAM, etc. with logo)
 - **htop** - Interactive process viewer (better than basic 'top')
 - **neovim** - Modern, extensible terminal text editor (Vim fork)
