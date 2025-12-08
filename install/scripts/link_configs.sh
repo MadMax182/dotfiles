@@ -13,10 +13,8 @@ echo -e "${BLUE}=== Config Folder Linking Script ===${NC}\n"
 [ ! -d "$CONFIG_SOURCE_DIR" ] && echo -e "${RED}Error: $CONFIG_SOURCE_DIR not found${NC}" && exit 1
 
 CONFIG_SOURCE_DIR=$(readlink -f "$CONFIG_SOURCE_DIR")
-APPS_EXISTS=false
 WALLPAPERS_EXISTS=false
 
-[ -d "$APPS_SOURCE_DIR" ] && APPS_SOURCE_DIR=$(readlink -f "$APPS_SOURCE_DIR") && APPS_EXISTS=true && echo -e "${GREEN}✓${NC} Found apps"
 [ -d "$WALLPAPERS_SOURCE_DIR" ] && WALLPAPERS_SOURCE_DIR=$(readlink -f "$WALLPAPERS_SOURCE_DIR") && WALLPAPERS_EXISTS=true && echo -e "${GREEN}✓${NC} Found wallpapers"
 
 mkdir -p "$CONFIG_DIR" "$PICTURES_DIR"
@@ -62,8 +60,6 @@ process_dir() {
 
 echo -e "${BLUE}--- Processing config folders ---${NC}"
 process_dir "$CONFIG_SOURCE_DIR" "config"
-
-[ "$APPS_EXISTS" = true ] && echo -e "\n${BLUE}--- Processing apps ---${NC}" && process_dir "$APPS_SOURCE_DIR" "apps"
 
 # Link wallpapers
 if [ "$WALLPAPERS_EXISTS" = true ]; then
