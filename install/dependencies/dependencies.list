@@ -3,8 +3,7 @@
 # Apps
 1password # Password manager
 1password-cli # Password manager CLI integration
-
-
+nautilus # file manager
 
 # Lazyvim (Neovim IDE setup)
 kitty  # Modern, GPU-accelerated terminal emulator

@@ -23,6 +23,7 @@ bash ./install/install.sh
 
 - **1password** - Password manager
 - **1password-cli** - Password manager CLI integration
+- **nautilus** - file manager
 - **kitty** - Modern, GPU-accelerated terminal emulator
 - **lazygit** - Terminal UI for git commands (makes git operations visual and easier)
 - **git** - Version control system for tracking code changes
