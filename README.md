@@ -74,7 +74,7 @@ bash ./install/install.sh
 ### Fonts
 
 - DepartureMono
-- CommitMono- CommitMono<!-- PACKAGE_LIST_END -->
+- CommitMono- CommitMono- CommitMono<!-- PACKAGE_LIST_END -->
 
 ## Features
 

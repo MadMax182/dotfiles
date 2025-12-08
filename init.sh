@@ -8,7 +8,7 @@ set -e
 B='\033[0;34m' G='\033[0;32m' Y='\033[1;33m' R='\033[0;31m' N='\033[0m'
 
 # Configuration
-REPO_URL="https://github.com/MadMax182/dotfiles.git" # Change this!
+REPO_URL="https://github.com/MadMax182/dotfiles.git"
 INSTALL_DIR="$HOME/.userconfig"
 
 echo -e "${B}=== Dotfiles Bootstrap ===${N}\n"
