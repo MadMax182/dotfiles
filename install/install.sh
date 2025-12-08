@@ -2,9 +2,16 @@
 
 # Main installation script with selective script execution
 
-cd "$(dirname "$0" | cut -d'/' -f1-4)"
+# Get the directory where this script is located
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+# Get the repository root (parent of install directory)
+REPO_ROOT="$(dirname "$SCRIPT_DIR")"
 
-source "./paths/paths.conf" || { echo "Error: paths.conf not found"; exit 1; }
+# Change to repository root
+cd "$REPO_ROOT" || { echo "Error: Failed to change to repository root"; exit 1; }
+
+# Source paths configuration
+source "$REPO_ROOT/paths/paths.conf" || { echo "Error: paths.conf not found"; exit 1; }
 
 # Colors
 B='\033[0;34m' G='\033[0;32m' Y='\033[1;33m' R='\033[0;31m' N='\033[0m'

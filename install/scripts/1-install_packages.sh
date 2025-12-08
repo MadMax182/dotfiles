@@ -2,7 +2,9 @@
 
 # Installs system packages from dependencies.list using pacman, with yay fallback for AUR packages
 
-source "./paths/paths.conf"
+# Source paths configuration with absolute path
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.userconfig}"
+source "$DOTFILES_DIR/paths/paths.conf"
 
 FULL_DEP_PATH="$DEPENDENCY_DIR/$DEPENDENCY_FILE"
 

@@ -3,7 +3,9 @@
 # Links theme directories to config folders as 'themes'
 # Example: ./themes/waybar -> ./config/waybar/themes
 
-source "./paths/paths.conf"
+# Source paths configuration with absolute path
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.userconfig}"
+source "$DOTFILES_DIR/paths/paths.conf"
 
 # Colors
 RED='\033[0;31m' GREEN='\033[0;32m' YELLOW='\033[1;33m' BLUE='\033[0;34m' NC='\033[0m'

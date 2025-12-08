@@ -2,7 +2,9 @@
 
 # Installs applications from apps.list using pacman/yay and flatpak
 
-source "./paths/paths.conf"
+# Source paths configuration with absolute path
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.userconfig}"
+source "$DOTFILES_DIR/paths/paths.conf"
 
 FULL_APP_PATH="$DEPENDENCY_DIR/$APP_FILE"
 

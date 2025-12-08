@@ -2,9 +2,13 @@
 
 # Generates package list section in README.md from dependency files
 
-cd "$(dirname "$0")"
+# Get script directory and change to it
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR" || { echo "Error: Failed to change to script directory"; exit 1; }
 
-source "./paths/paths.conf"
+# Source paths configuration with absolute path
+DOTFILES_DIR="${DOTFILES_DIR:-$HOME/.userconfig}"
+source "$DOTFILES_DIR/paths/paths.conf"
 
 README_FILE="README.md"
 TEMP_FILE="${README_FILE}.tmp"
