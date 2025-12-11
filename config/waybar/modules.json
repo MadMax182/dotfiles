@@ -90,9 +90,9 @@
   // Cliphist
   "custom/cliphist": {
     "format": "",
-    "on-click": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh",
-    "on-click-right": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh d",
-    "on-click-middle": "sleep 0.1 && ~/.config/hypr/scripts/cliphist.sh w",
+    "on-click": "sleep 0.1 && ~/.userconfig/scripts/cliphist.sh",
+    "on-click-right": "sleep 0.1 && ~/.userconfig/scripts/cliphist.sh d",
+    "on-click-middle": "sleep 0.1 && ~/.userconfig/scripts/cliphist.sh w",
     "tooltip-format": "Left: Open clipboard Manager\nRight: Delete an entry\nMiddle: Clear list"
   },
 
@@ -101,29 +101,29 @@
     "format": "  {}",
     "escape": true,
     "return-type": "json",
-    "exec": "~/.config/hypr/scripts/updates.sh",
+    "exec": "~/.userconfig/scripts/updates/updates.sh",
     "interval": 1800,
     "signal": 1,
     "hide-empty-text": true,
-    "on-click": "~/.config/hypr/scripts/installupdates.sh"
+    "on-click": "~/.userconfig/scripts/updates/installupdates.sh"
   },
   // Wallpaper
   "custom/wallpaper": {
     "format": "",
     "on-click": "bash -c waypaper &",
-    "on-click-right": "~/.config/hypr/scripts/wallpaper-effects.sh",
+    "on-click-right": "~/.userconfig/scripts/wallpaper-effects.sh",
     "tooltip-format": "Left: Select a wallpaper\nRight: Select wallpaper effect"
   },
   // Waybar Themes
   "custom/waybarthemes": {
     "format": "",
-    "on-click": "~/.config/waybar/themeswitcher.sh",
+    "on-click": "~/.userconfig/scripts/themeswitcher.sh",
     "tooltip-format": "Select a waybar theme"
   },
   // Keybindings
   "custom/keybindings": {
     "format": "",
-    "on-click": "~/.config/hypr/scripts/keybindings.sh",
+    "on-click": "~/.userconfig/scripts/keybindings.sh",
     "tooltip": false
   },
   // Calculator
@@ -132,32 +132,26 @@
     "on-click": "qalculate-gtk",
     "tooltip-format": "Open calculator"
   },
-  // Windows VM
-  "custom/windowsvm": {
-    "format": "",
-    "on-click": "~/.config/hypr/scripts/launchvm.sh",
-    "tooltip": false
-  },
   // Rofi Application Launcher
   "custom/appmenu": {
     // START APPS LABEL
     "format": "Apps",
     // END APPS LABEL
-    "on-click": "~/.config/hypr/scripts/launcher.sh",
-    "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
+    "on-click": "~/.userconfig/scripts/launcher.sh",
+    "on-click-right": "~/.userconfig/scripts/keybindings.sh",
     "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
   },
   // Rofi Application Launcher
   "custom/appmenuicon": {
     "format": "",
     "on-click": "sleep 0.2;rofi -show drun -replace",
-    "on-click-right": "~/.config/hypr/scripts/keybindings.sh",
+    "on-click-right": "~/.userconfig/scripts/keybindings.sh",
     "tooltip-format": "Left: Open the application launcher\nRight: Show all keybindings"
   },
   // Power Menu
   "custom/exit": {
     "format": "",
-    "on-click": "~/.config/hypr/scripts/wlogout.sh",
+    "on-click": "~/.userconfig/scripts/wlogout.sh",
     "on-click-right": "hyprlock",
     "tooltip-format": "Left: Power menu\nRight: Lock screen"
   },
@@ -186,8 +180,8 @@
   "custom/hyprshade": {
     "format": "",
     "tooltip-format": "Toggle Screen Shader",
-    "on-click": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh",
-    "on-click-right": "sleep 0.5; ~/.config/hypr/scripts/hyprshade.sh rofi"
+    "on-click": "sleep 0.5; ~/.userconfig/scripts/hyprshade.sh",
+    "on-click-right": "sleep 0.5; ~/.userconfig/scripts/hyprshade.sh rofi"
   },
   // Hypridle inhibitor
   "custom/hypridle": {
@@ -196,8 +190,8 @@
     "escape": true,
     "exec-on-event": true,
     "interval": 60,
-    "exec": "~/.config/hypr/scripts/hypridle.sh status",
-    "on-click": "~/.config/hypr/scripts/hypridle.sh toggle"
+    "exec": "~/.userconfig/scripts/hypridle.sh status",
+    "on-click": "~/.userconfig/scripts/hypridle.sh toggle"
   },
   // Keyboard State
   "keyboard-state": {
@@ -229,19 +223,19 @@
   // CPU
   "cpu": {
     "format": "/ C {usage}% ",
-    "on-click": "~/.config/hypr/scripts/system-monitor.sh"
+    "on-click": "~/.userconfig/scripts/system-monitor.sh"
   },
   // Memory
   "memory": {
     "format": "/ M {}% ",
-    "on-click": "~/.config/hypr/scripts/system-monitor.sh"
+    "on-click": "~/.userconfig/scripts/system-monitor.sh"
   },
   // Harddisc space used
   "disk": {
     "interval": 30,
     "format": "D {percentage_used}% ",
     "path": "/",
-    "on-click": "~/.config/hypr/scripts/system-monitor.sh"
+    "on-click": "~/.userconfig/scripts/system-monitor.sh"
   },
   "hyprland/language": {
     "format": "/ K {short}"
@@ -309,8 +303,8 @@
     "tooltip-format-ethernet": " {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
     "tooltip-format-disconnected": "Disconnected",
     "max-length": 50,
-    "on-click": "~/.config/hypr/scripts/networkmanager.sh",
-    "on-click-right": "~/.config/hypr/scripts/nm-applet.sh toggle",
+    "on-click": "~/.userconfig/scripts/networkmanager.sh",
+    "on-click-right": "~/.userconfig/scripts/nm-applet.sh toggle",
   },
   // Battery
   "battery": {
@@ -376,7 +370,7 @@
     "format-disabled": "",
     "format-off": "",
     "interval": 30,
-    "on-click": "sleep 0.1 && ~/.config/hypr/scripts/bluetooth.sh",
+    "on-click": "sleep 0.1 && ~/.userconfig/scripts/bluetooth.sh",
     "format-no-controller": ""
   },
   // Other

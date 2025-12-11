@@ -5,12 +5,6 @@
     "keybind" : "l"
 }
 {
-    "label" : "logout",
-    "action" : "~/.userconfig/scripts/power.sh exit",
-    "text" : "Log Out",
-    "keybind" : "e"
-}
-{
     "label" : "suspend",
     "action" : "~/.userconfig/scripts/power.sh suspend",
     "text" : "Suspend",

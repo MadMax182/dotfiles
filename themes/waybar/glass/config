@@ -9,7 +9,6 @@
     "spacing": 0,
     // Load Modules
     "include": [
-        "~/.config/ml4w/settings/waybar-quicklinks.json",
         "~/.config/waybar/modules.json"
     ],
     // Modules Left

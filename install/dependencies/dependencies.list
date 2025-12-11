@@ -16,6 +16,8 @@ hyprpaper  # Wallpaper utility for Hyprland
 hyprlock  # Screen locker for Hyprland
 hypridle  # Idle daemon (triggers actions when you're inactive, like locking screen)
 hyprpicker  # Color picker tool for Hyprland
+matugen
+
 
 # File & Download Tools
 wget  # Command-line tool to download files from the web
