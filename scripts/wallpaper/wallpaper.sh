@@ -7,15 +7,17 @@
 
 cd "$(dirname "$0" | cut -d'/' -f1-4)"
 
-# Source library.sh
-source ./scripts/wallpaper/library.sh
+# Logging function
+_writeLog() {
+  echo "[wallpaper] $1"
+}
 
 # -----------------------------------------------------
 # Check to use wallpaper cache
 # -----------------------------------------------------
 #
 # if [ -f ~/.config/ml4w/settings/wallpaper_cache ]; then
-use_cache=1
+use_cache=0
 #   _writeLog "Using Wallpaper Cache"
 # else
 #   use_cache=0
@@ -55,7 +57,7 @@ blurredwallpaper="$cache_folder/blurred_wallpaper.png"
 squarewallpaper="$cache_folder/square_wallpaper.png"
 rasifile="$cache_folder/current_wallpaper.rasi"
 defaultwallpaper="$PICTURES/wallpapers/default.jpg"
-wallpapereffect="$HOME/.userconfig/scripts/wallpaper-effect.sh"
+wallpapereffect="./wallpaper-effect.sh"
 blur="50x30"
 
 # -----------------------------------------------------
@@ -105,7 +107,7 @@ if [ -f $wallpapereffect ]; then
     else
       _writeLog "Generate new cached wallpaper $effect-$wallpaperfilename with effect $effect"
       notify-send --replace-id=1 "Using wallpaper effect $effect..." "with image $wallpaperfilename" -h int:value:33
-      source $HOME/.config/hypr/effects/wallpaper/$effect
+      source ./effects/wallpaper/$effect
     fi
     _writeLog "Loading wallpaper $generatedversions/$effect-$wallpaperfilename with effect $effect"
     _writeLog "Setting wallpaper with $used_wallpaper"
@@ -130,10 +132,10 @@ THEME_PREF=$(grep -E '^gtk-application-prefer-dark-theme=' "$SETTINGS_FILE" | aw
 # -----------------------------------------------------
 
 if [ "$THEME_PREF" -eq 0 ]; then
-  $HOME/.local/bin/matugen image $used_wallpaper -m "light"
+  matugen image $used_wallpaper -m "light"
   _writeLog "Execute matugen with light $used_wallpaper"
 else
-  $HOME/.local/bin/matugen image $used_wallpaper -m "dark"
+  matugen image $used_wallpaper -m "dark"
   _writeLog "Execute matugen with dark $used_wallpaper"
 fi
 
@@ -143,20 +145,6 @@ fi
 
 sleep 0.5
 $HOME/.config/waybar/start.sh
-
-# -----------------------------------------------------
-# Reload nwg-dock-hyprland
-# -----------------------------------------------------
-
-$HOME/.config/nwg-dock-hyprland/launch.sh &
-
-# -----------------------------------------------------
-# Update Pywalfox
-# -----------------------------------------------------
-
-if type pywalfox >/dev/null 2>&1; then
-  pywalfox update
-fi
 
 # -----------------------------------------------------
 # Update SwayNC
@@ -178,11 +166,14 @@ else
   #   _writeLog "Resized to 75%"
   cp "$used_wallpaper" "$blurredwallpaper"
   _writeLog "Copied wallpaper to $blurredwallpaper for processing"
-  
+
   if [ ! "$blur" == "0x0" ]; then
-    magick $blurredwallpaper -blur $blur -brightness-contrast -30 $blurredwallpaper
-    cp $blurredwallpaper $generatedversions/blur-$blur-$effect-$wallpaperfilename.png
-    _writeLog "Blurred and darkened"
+    if magick "$blurredwallpaper" -blur $blur -brightness-contrast -10 "$blurredwallpaper"; then
+      cp "$blurredwallpaper" "$generatedversions/blur-$blur-$effect-$wallpaperfilename.png"
+      _writeLog "Blurred and darkened"
+    else
+      _writeLog "ERROR: Failed to blur wallpaper, not caching"
+    fi
   fi
 fi
 cp $generatedversions/blur-$blur-$effect-$wallpaperfilename.png $blurredwallpaper

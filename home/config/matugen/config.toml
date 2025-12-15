@@ -1,0 +1,56 @@
+[config]
+
+[templates.kitty]
+input_path = '~/.config/matugen/templates/kitty-colors.conf'
+output_path = '~/.config/kitty/colors-matugen.conf'
+post_hook = 'pkill -SIGUSR1 kitty'
+
+[templates.hyprland]
+input_path = '~/.config/matugen/templates/hyprland-colors.conf'
+output_path = '~/.config/hypr/settings/colors/default.conf'
+post_hook = 'hyprctl reload'
+
+[templates.waybar]
+input_path = '~/.config/matugen/templates/colors.css'
+output_path = '~/.config/waybar/colors.css'
+
+[templates.gtk3]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/.config/gtk-3.0/colors.css'
+
+[templates.gtk4]
+input_path = '~/.config/matugen/templates/gtk-colors.css'
+output_path = '~/.config/gtk-4.0/colors.css'
+
+[templates.wlogout]
+input_path = '~/.config/matugen/templates/colors.css'
+output_path = '~/.config/wlogout/colors.css'
+
+[templates.swaync]
+input_path = '~/.config/matugen/templates/colors.css'
+output_path = '~/.config/swaync/colors.css'
+
+[templates.walker]
+input_path = '~/.config/matugen/templates/colors.css'
+output_path = '~/.config/walker/colors.css'
+
+[templates.sequences]
+input_path = '~/.config/matugen/templates/sequences'
+output_path = '~/.cache/wal/sequences'
+
+[templates.primary]
+input_path = '~/.config/matugen/templates/primary'
+output_path = '~/.userconfig/themes/colors/primary'
+
+[templates.secondary]
+input_path = '~/.config/matugen/templates/secondary'
+output_path = '~/.userconfig/themes/colors/secondary'
+
+[templates.onsurface]
+input_path = '~/.config/matugen/templates/onsurface'
+output_path = '~/.userconfig/themes/colors/onsurface'
+
+[templates.ohmyposh]
+input_path = '~/.config/matugen/templates/ohmyposh-colors.json'
+output_path = '~/.config/ohmyposh/colors.json'
+post_hook = "jq --slurpfile palette ~/.config/ohmyposh/colors.json '. + $palette[0]' ~/.config/ohmyposh/EDM115-newline.omp.json > /tmp/new_theme.json && mv /tmp/new_theme.json ~/.config/ohmyposh/EDM115-newline.omp.json"

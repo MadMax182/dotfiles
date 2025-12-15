@@ -1,0 +1,8 @@
+brightnessctl  # Control screen brightness
+envycontrol
+xf86-video-amdgpu
+vulkan-radeon
+lib32-vulkan-radeon
+nvidia
+nvidia-utils
+nvidia-prime

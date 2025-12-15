@@ -1,0 +1,34 @@
+base-devel
+git
+lazygit
+fish
+fastfetch
+neovim
+walker
+elephant-desktopapplications-bin
+power-profiles-daemon
+blueman
+ohmyposh
+grimblast-git  # Screenshot and Area selector tool
+cliphist  # Clipboard history manager for Wayland
+flatpak  # Universal package manager for sandboxed apps
+waypaper  # GUI wallpaper setter for Wayland
+waybar  # Highly customizable status bar for Wayland
+wlogout
+xdg-user-dirs
+#xdg-desktop-portal-gtk  # Desktop integration for GTK apps on Wayland
+#xdg-desktop-portal-hyprland  # Desktop integration specifically for Hyprland
+#qt5-wayland  # Allows Qt5 applications to run on Wayland
+#qt6-wayland  # Allows Qt6 applications to run on Wayland
+swww
+hyprlock  # Screen locker for Hyprland
+hypridle  # Idle daemon (triggers actions when you're inactive, like locking screen)
+hyprpicker  # Color picker tool for Hyprland
+matugen
+jq
+btop
+swaync
+unzip
+imagemagick
+plymouth
+plymouth-theme-dark-arch

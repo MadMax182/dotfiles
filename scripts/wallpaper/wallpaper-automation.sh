@@ -6,7 +6,7 @@
 # /_/   \_\__,_|\__\___/     \_/\_/  |_|
 #
 
-ml4w_cache_folder="$HOME/.cache/hypr"
+cache_folder="$HOME/.cache/hypr"
 
 _setWallpaperRandomly() {
   waypaper --random

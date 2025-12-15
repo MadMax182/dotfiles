@@ -43,15 +43,14 @@ _isInstalled() {
 
 sleep 1
 clear
-figlet -f smslant "Updates"
+echo "================================"
+echo "         Install Updates        "
+echo "================================"
 echo
-primarycolor=$(cat ~/.userconfig/themes/colors/primary)
-onsurfacecolor=$(cat ~/.userconfig/themes/colors/onsurface)
-if gum confirm --selected.background=$primarycolor --prompt.foreground=$onsurfacecolor "DO YOU WANT TO START THE UPDATE NOW?"; then
+read -p "DO YOU WANT TO START THE UPDATE NOW? [y/N] " confirm
+if [[ "$confirm" =~ ^[Yy]$ ]]; then
   echo
   echo ":: Update started..."
-elif [ $? -eq 130 ]; then
-  exit 130
 else
   echo
   echo ":: Update canceled."

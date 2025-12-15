@@ -1,0 +1,24 @@
+{
+    "label" : "lock",
+    "action" : "~/.userconfig/scripts/logout/power.sh lock",
+    "text" : "Lock",
+    "keybind" : "l"
+}
+{
+    "label" : "suspend",
+    "action" : "~/.userconfig/scripts/logout/power.sh suspend",
+    "text" : "Suspend",
+    "keybind" : "u"
+}
+{
+    "label" : "reboot",
+    "action" : "~/.userconfig/scripts/logout/power.sh reboot",
+    "text" : "Restart",
+    "keybind" : "r"
+}
+{
+    "label" : "shutdown",
+    "action" : "~/.userconfig/scripts/logout/power.sh shutdown",
+    "text" : "Power Off",
+    "keybind" : "s"
+}
