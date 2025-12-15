@@ -1,5 +1,18 @@
 base-devel
 git
+yay
+kitty
+
+# Hyprland
+hyprland
+qt5-wayland
+qt6-wayland
+grim
+polkit-gnome
+slurp
+uwsm
+xdg-desktop-portal-hyprland
+
 lazygit
 fish
 fastfetch
@@ -32,3 +45,4 @@ unzip
 imagemagick
 plymouth
 plymouth-theme-dark-arch
+
