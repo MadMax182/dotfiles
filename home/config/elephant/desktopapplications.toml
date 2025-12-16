@@ -1,0 +1,14 @@
+blacklist = [
+  "avahi-discover",
+  "bssh",
+  "bvnc",
+  "blueman-manager",
+  "qv4l2",
+  "qvidcap",
+  "uuctl",
+  "waypaper",
+  "xgps",
+  "xgpsspeed",
+  "kitty-nvim",
+  "kitty"
+]

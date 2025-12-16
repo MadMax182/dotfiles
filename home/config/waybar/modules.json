@@ -22,7 +22,7 @@
       "default": ""
     },
     "persistent-workspaces": {
-            "*": 5
+            "*": [1, 2, 3, 4, 5]
     }
   },
   // Taskbar
@@ -334,7 +334,7 @@
     "format-disabled": "",
     "format-off": "",
     "interval": 30,
-    "on-click": "sleep 0.1 && ~/.userconfig/scripts/bluetooth.sh",
+    "on-click": "sleep 0.1 && blueman-manager",
     "format-no-controller": ""
   },
 

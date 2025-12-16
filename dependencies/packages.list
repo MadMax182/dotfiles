@@ -1,48 +1,76 @@
-base-devel
-git
-yay
-kitty
+# ─────────────────────────────────────────────────────────────
+# Core & Build Tools
+# ─────────────────────────────────────────────────────────────
+base-devel  # Development tools and libraries for building packages
+git  # Distributed version control system
+unzip  # Archive extraction utility
+yay  # AUR helper written in Go
 
-# Hyprland
-hyprland
-qt5-wayland
-qt6-wayland
-grim
-polkit-gnome
-slurp
-uwsm
-xdg-desktop-portal-hyprland
-
-lazygit
-fish
-fastfetch
-neovim
-walker
-elephant-desktopapplications-bin
-power-profiles-daemon
-blueman
-ohmyposh
-grimblast-git  # Screenshot and Area selector tool
-cliphist  # Clipboard history manager for Wayland
-flatpak  # Universal package manager for sandboxed apps
-waypaper  # GUI wallpaper setter for Wayland
-waybar  # Highly customizable status bar for Wayland
-wlogout
-xdg-user-dirs
-#xdg-desktop-portal-gtk  # Desktop integration for GTK apps on Wayland
-#xdg-desktop-portal-hyprland  # Desktop integration specifically for Hyprland
-#qt5-wayland  # Allows Qt5 applications to run on Wayland
-#qt6-wayland  # Allows Qt6 applications to run on Wayland
-swww
+# ─────────────────────────────────────────────────────────────
+# Hyprland & Desktop Environment
+# ─────────────────────────────────────────────────────────────
+hyprland  # Dynamic tiling Wayland compositor
+hypridle  # Idle daemon for Hyprland
 hyprlock  # Screen locker for Hyprland
-hypridle  # Idle daemon (triggers actions when you're inactive, like locking screen)
+hyprpaper  # Wallpaper utility for Hyprland
 hyprpicker  # Color picker tool for Hyprland
-matugen
-jq
-btop
-swaync
-unzip
-imagemagick
-plymouth
-plymouth-theme-dark-arch
+hyprsunset  # Blue light filter for Hyprland
+uwsm  # Universal Wayland Session Manager
+xdg-desktop-portal-hyprland  # Desktop portal for Hyprland
+
+# ─────────────────────────────────────────────────────────────
+# Wayland Utilities
+# ─────────────────────────────────────────────────────────────
+cliphist  # Clipboard history manager for Wayland
+grim  # Screenshot utility for Wayland
+grimblast-git  # Screenshot and area selector tool for Hyprland
+qt5-wayland  # Qt5 Wayland platform plugin
+qt6-wayland  # Qt6 Wayland platform plugin
+slurp  # Region selector for Wayland
+swww  # Animated wallpaper daemon for Wayland
+waypaper  # GUI wallpaper setter for Wayland
+
+# ─────────────────────────────────────────────────────────────
+# Status Bar & UI
+# ─────────────────────────────────────────────────────────────
+swaync  # Notification daemon for Wayland
+walker  # Application launcher for Wayland
+elephant-desktopapplications-bin  # backend for walker
+waybar  # Highly customizable status bar for Wayland
+wlogout  # Logout menu for Wayland
+
+# ─────────────────────────────────────────────────────────────
+# Terminal & Shell
+# ─────────────────────────────────────────────────────────────
+btop  # Resource monitor with modern TUI
+fastfetch  # Fast system information fetcher
+fish  # Friendly interactive shell
+kitty  # GPU-accelerated terminal emulator
+lazygit  # Terminal UI for git commands
+neovim  # Hyperextensible Vim-based text editor
+ohmyposh  # Prompt theme engine for any shell
+jq  # Command-line JSON processor
+
+# ─────────────────────────────────────────────────────────────
+# System Utilities
+# ─────────────────────────────────────────────────────────────
+blueman  # Bluetooth manager with GTK interface
+brightnessctl  # Tool to control device brightness
+flatpak  # Universal package manager for sandboxed apps
+polkit-gnome  # Authentication agent for polkit
+power-profiles-daemon  # Power profile management daemon
+xdg-user-dirs  # Tool to manage user directories
+
+# ─────────────────────────────────────────────────────────────
+# Media & Theming
+# ─────────────────────────────────────────────────────────────
+imagemagick  # Image manipulation tools
+matugen  # Material You color generation tool
+
+# ─────────────────────────────────────────────────────────────
+# Additional Apps
+# ─────────────────────────────────────────────────────────────
+1password
+1password-cli
+discord
 
