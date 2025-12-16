@@ -10,5 +10,6 @@ blacklist = [
   "xgps",
   "xgpsspeed",
   "kitty-nvim",
-  "kitty"
+  "kitty",
+  "pavucontrol"
 ]

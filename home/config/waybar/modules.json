@@ -27,7 +27,7 @@
   },
   // Taskbar
   "wlr/taskbar": {
-    "format": "{icon}",
+    "format": "{}",
     "icon-size": 18,
     "tooltip-format": "{title}",
     "on-click": "activate",
@@ -292,17 +292,13 @@
       " "
     ]
   },
-  // Power Profiles Daemon
-  "power-profiles-daemon": {
-    "format": "{icon}",
-    "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
-    "tooltip": true,
-    "format-icons": {
-      "default": "",
-      "performance": "󰓅",
-      "balanced": "",
-      "power-saver": ""
-    }
+  // TLP Power Management
+  "custom/tlp": {
+    "format": "{}",
+    "return-type": "json",
+    "interval": 1,
+    "exec": "/home/mmzim/.userconfig/scripts/waybar/tlp-status.sh",
+    "tooltip": true
   },
   // Pulseaudio
   "pulseaudio": {
@@ -347,7 +343,7 @@
       "transition-left-to-right": false
     },
     "modules": [
-      "power-profiles-daemon",
+      "custom/tlp",
       "bluetooth",
       "network"
     ]

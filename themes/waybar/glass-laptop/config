@@ -20,15 +20,19 @@
         "mpris",
         //"wlr/taskbar",
         //"group/quicklinks",
+        //"clock",
         "custom/empty"
     ],
     // Modules Center
     "modules-center": [
         "clock",
+        //"hyprland/workspaces",
+        //"mpris",
         "custom/empty"
     ],
     // Modules Right    
     "modules-right": [
+        //"mpris",
         "tray",
         "custom/updates",
         "pulseaudio",
@@ -39,8 +43,11 @@
         //"power-profiles-daemon",
         //"group/hardware",
         //"group/tools",
-        "group/settings",
+        //"group/settings",
+        "bluetooth",
+        "network",
         "custom/notification",
+        "custom/tlp",
         "battery"
         //"custom/exit"
     ]
