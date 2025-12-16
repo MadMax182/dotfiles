@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Setup Hyprland autologin on tty1 with 5-second delay
+# Setup Hyprland autologin on tty1, manual login on tty2
 # Run this script with: bash setup-hyprland-autologin.sh
 
 set -e
@@ -27,61 +27,49 @@ if pacman -Qi sddm > /dev/null 2>&1; then
     echo "SDDM removed."
 fi
 
-# Create the delayed autologin script
-sudo tee /usr/local/bin/delayed-autologin > /dev/null << 'SCRIPT_EOF'
-#!/bin/bash
-USER_TO_LOGIN="__USER_PLACEHOLDER__"
+# Remove old delayed-autologin script if it exists
+sudo rm -f /usr/local/bin/delayed-autologin
 
-clear
-echo ""
-echo "╔════════════════════════════════════════════╗"
-echo "║  Auto-login in 5 seconds...                ║"
-echo "║                                            ║"
-echo "║  ENTER  → Start Hyprland immediately       ║"
-echo "║  ESC    → Manual login (TTY)               ║"
-echo "╚════════════════════════════════════════════╝"
-echo ""
+# Remove old getty override if it exists
+sudo rm -rf /etc/systemd/system/getty@tty1.service.d
 
-# Read single keypress with timeout, checking each second
-for remaining in 5 4 3 2 1; do
-    printf "\r  [%d] Waiting... " "$remaining"
+# Disable getty on tty1 (hyprland.service will use it)
+sudo systemctl disable getty@tty1.service 2>/dev/null || true
 
-    if read -t 1 -n 1 -s key 2>/dev/null; then
-        if [ "$key" = "" ]; then
-            # Enter pressed (empty string with -n 1)
-            printf "\n\n  Starting Hyprland...\n\n"
-            exec /bin/login -f "$USER_TO_LOGIN"
-        elif [ "$key" = $'\e' ]; then
-            # Escape pressed
-            printf "\n\n  Manual login:\n\n"
-            exec /bin/login
-        fi
-        # Any other key - ignore and continue countdown
-    fi
-done
+# Create hyprland.service for autologin + Hyprland on tty1
+sudo tee /etc/systemd/system/hyprland.service > /dev/null << EOF
+[Unit]
+Description=Hyprland (tty1)
+After=systemd-user-sessions.service plymouth-quit-wait.service
+After=getty@tty1.service
+Conflicts=getty@tty1.service
 
-# Timeout reached - auto login
-printf "\n\n  Starting Hyprland...\n\n"
-exec /bin/login -f "$USER_TO_LOGIN"
-SCRIPT_EOF
-
-# Replace placeholder with actual username
-sudo sed -i "s/__USER_PLACEHOLDER__/$TARGET_USER/" /usr/local/bin/delayed-autologin
-sudo chmod +x /usr/local/bin/delayed-autologin
-
-echo "Delayed autologin script created at /usr/local/bin/delayed-autologin"
-
-# Create getty service override directory
-sudo mkdir -p /etc/systemd/system/getty@tty1.service.d
-
-# Create autologin configuration using the delayed login script
-sudo tee /etc/systemd/system/getty@tty1.service.d/autologin.conf > /dev/null << 'EOF'
 [Service]
-ExecStart=
-ExecStart=-/sbin/agetty --noclear -l /usr/local/bin/delayed-autologin %I $TERM
+Type=simple
+ExecStart=/sbin/agetty -o '-p -f -- \\u' --noclear --autologin $TARGET_USER tty1 \$TERM
+Restart=always
+RestartSec=0
+UtmpIdentifier=tty1
+TTYPath=/dev/tty1
+TTYReset=yes
+TTYVHangup=yes
+TTYVTDisallocate=yes
+StandardInput=tty
+StandardOutput=tty
+
+[Install]
+WantedBy=multi-user.target
 EOF
 
-echo "Getty autologin configuration created."
+sudo systemctl daemon-reload
+sudo systemctl enable hyprland.service
+
+echo "hyprland.service: Enabled (tty1)"
+
+# Enable getty on tty2 for manual login
+sudo systemctl enable getty@tty2.service
+
+echo "getty@tty2.service: Enabled (manual login)"
 
 # Setup Hyprland autostart on tty1
 HYPRLAND_AUTOSTART='# Start Hyprland on tty1
@@ -106,11 +94,9 @@ else
 fi
 
 echo ""
-echo "Setup complete! Reboot your system to start Hyprland automatically."
+echo "Setup complete!"
 echo ""
-echo "On boot you will see a 5-second countdown:"
-echo "  - Press ENTER to skip and start Hyprland immediately"
-echo "  - Press ESC for manual login (TTY access)"
-echo "  - Wait 5 seconds for automatic Hyprland start"
+echo "  hyprland.service  (tty1): Hyprland starts automatically on boot"
+echo "  getty@tty2.service (tty2): Manual TTY login (Ctrl+Alt+F2)"
 echo ""
 echo "To reboot now, run: sudo reboot"
