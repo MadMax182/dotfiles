@@ -58,8 +58,10 @@ blueman  # Bluetooth manager with GTK interface
 brightnessctl  # Tool to control device brightness
 flatpak  # Universal package manager for sandboxed apps
 polkit-gnome  # Authentication agent for polkit
-power-profiles-daemon  # Power profile management daemon
+tlp  # Power profile management daemon
 xdg-user-dirs  # Tool to manage user directories
+powertop
+envycontrol
 
 # ─────────────────────────────────────────────────────────────
 # Media & Theming
