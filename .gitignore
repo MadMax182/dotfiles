@@ -1,0 +1,16 @@
+# Matugen generated color files
+home/config/kitty/colors-matugen.conf
+home/config/hypr/settings/colors/default.conf
+home/config/waybar/colors.css
+home/config/gtk-3.0/colors.css
+home/config/gtk-4.0/colors.css
+home/config/wlogout/colors.css
+home/config/swaync/colors.css
+home/config/walker/colors.css
+home/config/ohmyposh/colors.json
+themes/colors/primary
+themes/colors/secondary
+themes/colors/onsurface
+
+# Hyprland config selector
+home/config/hypr/hyprland.conf

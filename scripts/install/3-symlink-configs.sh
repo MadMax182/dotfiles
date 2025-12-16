@@ -24,6 +24,21 @@ for folder in "$SOURCE_DIR"/*/; do
     echo "Linked: $name"
 done
 
+WALLPAPERS_SOURCE="$HOME/.userconfig/wallpapers"
+PICTURES="${PICTURES:-$(xdg-user-dir PICTURES)}"
+
+if [[ -d "$WALLPAPERS_SOURCE" && -n "$PICTURES" ]]; then
+    echo -e "\nCreating wallpapers symlink..."
+    mkdir -p "$PICTURES"
+    target="$PICTURES/wallpapers"
+    if [[ -e "$target" && ! -L "$target" ]]; then
+        mv "$target" "${target}.backup.$(date +%Y%m%d%H%M%S)"
+        echo "Backed up: wallpapers"
+    fi
+    ln -sfn "$WALLPAPERS_SOURCE" "$target"
+    echo "Linked: $PICTURES/wallpapers -> $WALLPAPERS_SOURCE"
+fi
+
 if [[ -d "$THEMES_DIR" ]]; then
     echo -e "\nCreating theme symlinks..."
     for folder in "$THEMES_DIR"/*/; do
