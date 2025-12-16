@@ -19,27 +19,37 @@ HOME_DIR=$(eval echo ~"$TARGET_USER")
 
 echo "Uninstalling autologin for user: $TARGET_USER"
 
-# Remove delayed autologin script
-if [ -f /usr/local/bin/delayed-autologin ]; then
-    sudo rm -f /usr/local/bin/delayed-autologin
-    echo "Removed /usr/local/bin/delayed-autologin"
+# Remove boot entries
+if [ -f /boot/loader/entries/hyprland.conf ]; then
+    sudo rm -f /boot/loader/entries/hyprland.conf
+    echo "Removed /boot/loader/entries/hyprland.conf"
 fi
 
-# Remove getty override (old method)
+if [ -f /boot/loader/entries/tty.conf ]; then
+    sudo rm -f /boot/loader/entries/tty.conf
+    echo "Removed /boot/loader/entries/tty.conf"
+fi
+
+# Remove default setting from loader.conf
+sudo sed -i '/^default hyprland.conf/d' /boot/loader/loader.conf
+
+# Remove delayed autologin script (old method)
+sudo rm -f /usr/local/bin/delayed-autologin
+
+# Remove getty override
 if [ -d /etc/systemd/system/getty@tty1.service.d ]; then
     sudo rm -rf /etc/systemd/system/getty@tty1.service.d
-    echo "Removed getty@tty1 autologin override"
+    echo "Removed getty@tty1 override"
 fi
 
-# Disable and remove hyprland.service
-if [ -f /etc/systemd/system/hyprland.service ]; then
-    sudo systemctl disable hyprland.service 2>/dev/null || true
-    sudo rm -f /etc/systemd/system/hyprland.service
-    echo "Removed hyprland.service"
-fi
-
-# Re-enable getty@tty1
-sudo systemctl enable getty@tty1.service 2>/dev/null || true
+# Disable and remove hyprland services
+for SERVICE in hyprland.service hyprland-autologin.service; do
+    if [ -f /etc/systemd/system/$SERVICE ]; then
+        sudo systemctl disable $SERVICE 2>/dev/null || true
+        sudo rm -f /etc/systemd/system/$SERVICE
+        echo "Removed $SERVICE"
+    fi
+done
 
 # Disable getty@tty2
 sudo systemctl disable getty@tty2.service 2>/dev/null || true
@@ -50,10 +60,7 @@ sudo systemctl daemon-reload
 # Remove Hyprland autostart from shell profiles
 for PROFILE in "$HOME_DIR/.zprofile" "$HOME_DIR/.bash_profile"; do
     if [ -f "$PROFILE" ] && grep -q "exec Hyprland" "$PROFILE"; then
-        # Create temp file without the Hyprland block
-        grep -v -E "(# Start Hyprland on tty1|XDG_VTNR|exec Hyprland)" "$PROFILE" > "$PROFILE.tmp"
-        # Remove trailing blank lines
-        sed -i -e :a -e '/^\n*$/{$d;N;ba' -e '}' "$PROFILE.tmp" 2>/dev/null || true
+        grep -v -E "(# Start Hyprland|XDG_VTNR|exec Hyprland|/proc/cmdline)" "$PROFILE" > "$PROFILE.tmp"
         mv "$PROFILE.tmp" "$PROFILE"
         echo "Removed Hyprland autostart from $PROFILE"
     fi
