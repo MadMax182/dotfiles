@@ -334,20 +334,6 @@
     "format-no-controller": ""
   },
 
-    // Group Settings
-  "group/settings": {
-    "orientation": "horizontal",
-    "drawer": {
-      "transition-duration": 300,
-      "children-class": "not-memory",
-      "transition-left-to-right": false
-    },
-    "modules": [
-      "custom/tlp",
-      "bluetooth",
-      "network"
-    ]
-  },
   // Other
   "user": {
     "format": "{user}",

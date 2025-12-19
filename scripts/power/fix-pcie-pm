@@ -1,35 +1,48 @@
 #!/bin/bash
 # Fix PCIe bridge stuck in resuming state when dGPU is disabled via envycontrol
 
-# Clean up old configs
-sudo rm -f /etc/tlp.d/99-fix-pcie-bridge.conf
-
 SERVICE_FILE="/etc/systemd/system/fix-pcie-bridge.service"
+TIMER_FILE="/etc/systemd/system/fix-pcie-bridge.timer"
 UDEV_RULE="/etc/udev/rules.d/99-fix-pcie-bridge.rules"
 
-# Install systemd service if not present
+# Install systemd service
 if [[ ! -f "$SERVICE_FILE" ]]; then
     sudo tee "$SERVICE_FILE" > /dev/null << 'EOF'
 [Unit]
 Description=Fix PCIe bridge power management
-After=tlp.service
 
 [Service]
 Type=oneshot
 ExecStart=/bin/sh -c 'echo on > /sys/bus/pci/devices/0000:00:01.1/power/control'
 EOF
-    sudo systemctl daemon-reload
     echo "Installed systemd service"
 fi
 
-# Install udev rule to trigger on power supply changes
+# Install systemd timer to run every 10 seconds
+if [[ ! -f "$TIMER_FILE" ]]; then
+    sudo tee "$TIMER_FILE" > /dev/null << 'EOF'
+[Unit]
+Description=Fix PCIe bridge power management timer
+
+[Timer]
+OnBootSec=5
+OnUnitActiveSec=10
+
+[Install]
+WantedBy=timers.target
+EOF
+    sudo systemctl daemon-reload
+    sudo systemctl enable --now fix-pcie-bridge.timer
+    echo "Installed systemd timer"
+fi
+
+# Install udev rule for power supply changes
 if [[ ! -f "$UDEV_RULE" ]]; then
     sudo tee "$UDEV_RULE" > /dev/null << 'EOF'
-# Fix PCIe bridge on power supply change
 SUBSYSTEM=="power_supply", ATTR{type}=="Mains", RUN+="/bin/sh -c 'echo on > /sys/bus/pci/devices/0000:00:01.1/power/control'"
 EOF
     sudo udevadm control --reload-rules
-    echo "Installed udev rule for power supply changes"
+    echo "Installed udev rule"
 fi
 
 # Apply fix immediately
