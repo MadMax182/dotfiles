@@ -20,27 +20,37 @@
         "mpris",
         //"wlr/taskbar",
         //"group/quicklinks",
+        //"clock",
         "custom/empty"
     ],
     // Modules Center
     "modules-center": [
         "clock",
+        //"hyprland/workspaces",
+        //"mpris",
         "custom/empty"
     ],
     // Modules Right    
     "modules-right": [
+        //"mpris",
         "tray",
         "custom/updates",
         "pulseaudio",
         //"backlight",
-        "bluetooth",
-        "network",
-        "custom/cliphist",
-        "power-profiles-daemon",
-        //"battery",
+        //"bluetooth",
+        //"network",
+        //"custom/cliphist",
+        //"power-profiles-daemon",
         //"group/hardware",
         //"group/tools",
-        "custom/notification",
-        "custom/exit"
+        //"group/settings",
+        "temperature#cpu",
+        "custom/gpu-temp",
+        "bluetooth",
+        "network",
+        "custom/notification"
+        //"custom/tlp",
+        //"battery"
+        //"custom/exit"
     ]
 }

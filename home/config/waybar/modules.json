@@ -217,6 +217,22 @@
   "hyprland/language": {
     "format": "/ K {short}"
   },
+  // CPU Temperature
+  "temperature#cpu": {
+    "hwmon-path": "/sys/class/hwmon/hwmon3/temp1_input",
+    "critical-threshold": 80,
+    "interval": 1,
+    "format": "󰻠 {temperatureC}°C",
+    "on-click": "~/.userconfig/scripts/waybar/system-monitor.sh"
+  },
+  // GPU Temperature
+  "custom/gpu-temp": {
+    "exec": "~/.userconfig/scripts/waybar/nvidia-temp.sh",
+    "interval": 1,
+    "format": "󰢮 {}",
+    "on-click": "~/.userconfig/scripts/waybar/system-monitor.sh",
+    "tooltip": false
+  },
   // Group Hardware
   "group/hardware": {
     "orientation": "inherit",
@@ -229,6 +245,8 @@
       "custom/system",
       "disk",
       "cpu",
+      "temperature#cpu",
+      "custom/gpu-temp",
       "memory",
       "hyprland/language"
     ]
