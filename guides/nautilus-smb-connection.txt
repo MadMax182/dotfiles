@@ -1,0 +1,52 @@
+Connecting to SMB Drives in Nautilus (Arch Linux)
+====================================================
+
+PREREQUISITES:
+--------------
+1. Install gvfs-smb package:
+   sudo pacman -S gvfs-smb
+
+2. Restart GVFS daemon and Nautilus:
+   killall gvfsd
+   nautilus -q
+
+3. If still not working, log out/log back in or reboot
+
+
+CONNECTING TO SMB SHARE:
+------------------------
+Method 1: Direct URL (Most Reliable)
+1. Open Nautilus
+2. Press Ctrl+L to open location bar
+3. Type: smb://server-address/share-name
+   Examples:
+   - smb://192.168.1.100/shared
+   - smb://myserver.local/documents
+   - smb://username@server-address/share-name
+4. Press Enter
+5. Enter credentials when prompted
+6. Check "Remember this password" to auto-mount on login
+
+Method 2: GUI (if available in protocols)
+1. Open Nautilus
+2. Click "Other Locations" in sidebar
+3. Click "Connect to Server" at bottom
+4. Enter SMB address: smb://server-address/share-name
+5. Click "Connect"
+6. Authenticate when prompted
+
+
+TROUBLESHOOTING:
+----------------
+- Verify installation: pacman -Q gvfs-smb
+- Check backend exists: ls /usr/lib/gvfs/gvfsd-smb*
+- Mounted shares appear in: /run/user/1000/gvfs/
+- Access via Nautilus sidebar under "Network"
+- For guest access: select "Anonymous" when prompted
+
+
+NOTES:
+------
+- The Ctrl+L method works even if SMB doesn't appear in protocol dropdown
+- Shares auto-mount on login if credentials are saved
+- May need to restart session after installing gvfs-smb
