@@ -258,16 +258,15 @@
 
   // Network
   "network": {
-    "format": "{ifname}",
-    "format-wifi": " {signalStrength}%",
+    "interface": "*",
+    "format-wifi": " {signalStrength}%",
     "format-ethernet": "󰈀 {ifname}",
-    "format-disconnected": "Disconnected ⚠",
-    "tooltip-format": " {ifname} via {gwaddri}",
-    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
-    "tooltip-format-ethernet": "󰈀 {ifname}\nIP: {ipaddr}\n up: {bandwidthUpBits} down: {bandwidthDownBits}",
-    "tooltip-format-disconnected": "Disconnected",
+    "format-disconnected": "󰕓 tetrd ⚠",
+    "tooltip-format": "󰕓 tetrd\nIP: {ipaddr}\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+    "tooltip-format-wifi": "  {ifname} @ {essid}\nIP: {ipaddr}\nStrength: {signalStrength}%\nFreq: {frequency}MHz\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
+    "tooltip-format-ethernet": "󰈀 {ifname}\nIP: {ipaddr}\nUp: {bandwidthUpBits} Down: {bandwidthDownBits}",
     "max-length": 50,
-    "on-click": "~/.userconfig/scripts/networkmanager.sh",
+    "on-click": "nm-connection-editor",
     "on-click-right": "~/.userconfig/scripts/nm-applet.sh toggle",
   },
   // Battery

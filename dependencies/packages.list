@@ -62,6 +62,8 @@ tlp  # Power profile management daemon
 xdg-user-dirs  # Tool to manage user directories
 powertop
 envycontrol
+nm-connection-editor
+
 
 # ─────────────────────────────────────────────────────────────
 # Media & Theming
